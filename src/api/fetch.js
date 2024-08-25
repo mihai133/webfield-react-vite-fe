@@ -1,35 +1,42 @@
-import { useEffect, useState } from "react";
+import { useCallback, useState } from "react";
 
-export default function useFetch(
-  path = "",
-  options = {},
-  method = "GET"
-) {
+function useFetch() {
   const [data, setData] = useState(null);
   const [error, setError] = useState(null);
-  const [loading, setLoading] = useState(true);
-  const baseUrl = `http://localhost:3000/${path}`;
+  const [loading, setLoading] = useState(false);
+  
+  const fetchData = useCallback(async (path, method = 'GET', body = null, headers = {}) => {
+    setLoading(true);
+    const baseUrl = `http://localhost:3000/${path}`;
 
-  useEffect(() => {
-    if (loading) {
-      fetch(baseUrl, { method: method, ...options })
-        .then((response) => {
-          if (!response.ok) {
-            throw new Error("Failed to fetch data");
+      try {
+          const options = {
+              method,
+              headers: {
+                  'Content-Type': 'application/json',
+                  ...headers
+              }
+          };
+
+          if (body) {
+              options.body = JSON.stringify(body);
           }
-          return response.json()
-        })
-        .then((res) => {
-          setData(res);
-          setLoading(false);
-        })
-        .catch((error) => {
-          setError(error);
-          setLoading(false);
-        });
-    }
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [path, options]);
 
-  return { data, error, loading };
+          const response = await fetch(baseUrl, options);
+          if (!response.ok) {
+              throw new Error(`Error: ${response.status}`);
+          }
+
+          const result = await response.json();
+          setData(result);
+      } catch (err) {
+          setError(err.message);
+      } finally {
+          setLoading(false);
+      }
+  }, []);
+
+  return { data, error, loading, fetchData };
 }
+
+export default useFetch;
