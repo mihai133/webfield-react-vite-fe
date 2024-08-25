@@ -1,7 +1,30 @@
+import useFetch from '../../api/fetch';
 import LogoBlack from '../../assets/TheWebFieldn_new_logo_black.png'
 import { Link } from 'react-router-dom'
 
 export default function Signup() {
+  const {data, error, loading, fetchData} = useFetch();
+
+  const handleSubmit = async (e) => {
+    e.preventDefault();
+    
+    const name = e.target["formEmail"].value
+    const email = e.target["formEmail"].value
+    const password = e.target["formPassword"].value
+    const confirmPassword = e.target["formConfirmPassword"].value
+    console.log(name,email, password, confirmPassword)
+    await fetchData("/signup", "POST", {
+        user:{
+          name: name,
+          email: email,
+          password: password,
+        }
+      }
+    )
+  }
+
+  console.log(data)
+
   return (
     <>
     <section className="h-100 gradient-form" style={{backgroundColor: "#eee"}}>
@@ -19,26 +42,32 @@ export default function Signup() {
                   <h3 className='fs-3 fw-bold mb-5'>Create your new account</h3>
                 </div>
 
-                <form>
+                <form onSubmit={e => handleSubmit(e)}>
 
                   <div data-mdb-input-init className="form-outline mb-4">
-                    <label className="form-label" htmlFor="formEmail">Username</label>
+                    <label className="form-label" htmlFor="formName">Name</label>
+                    <input type="text" id="formName" className="form-control"
+                      placeholder="Enter your name" />
+                  </div>
+
+                  <div data-mdb-input-init className="form-outline mb-4">
+                    <label className="form-label" htmlFor="formEmail">Email</label>
                     <input type="email" id="formEmail" className="form-control"
-                      placeholder="Enter your email address" />
+                      placeholder="Enter your email address" required />
                   </div>
 
                   <div data-mdb-input-init className="form-outline mb-4">
                     <label className="form-label" htmlFor="formPassword">Password</label>
-                    <input type="password" id="formPassword" className="form-control" />
+                    <input type="password" id="formPassword" className="form-control" required/>
                   </div>
 
                   <div data-mdb-input-init className="form-outline mb-4">
                     <label className="form-label" htmlFor="formConfirmPassword">Confirm Password</label>
-                    <input type="password" id="formConfirmPassword" className="form-control" />
+                    <input type="password" id="formConfirmPassword" className="form-control" required/>
                   </div>
 
                   <div className="text-center pt-1 mb-5 pb-1">
-                    <button data-mdb-button-init data-mdb-ripple-init className="btn btn-primary btn-block fa-lg  mb-3" type="button">Create account</button>
+                    <button data-mdb-button-init data-mdb-ripple-init className="btn btn-primary btn-block fa-lg  mb-3" type="submit">Create account</button>
                   </div>
 
                   <div className="d-flex align-items-center justify-content-center pb-4">
