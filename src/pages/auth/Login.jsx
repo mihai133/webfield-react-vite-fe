@@ -6,23 +6,23 @@ import { Link, useNavigate } from "react-router-dom";
 import SetHeaders from "../../api/SetHeaders";
 
 export default function Login(props) {
+  const navigate = useNavigate();
+  const [userData, setUserData] = useState(null);
   const [formdata, setformdata] = useState({
     email: "",
     password: "",
   });
-  const [userData, setUserData] = useState(null);
-  const navigate = useNavigate();
 
   const handleChange = (e) => {
     setformdata({ ...formdata, [e.target.name]: e.target.value });
   };
+
   const handleSubmit = async () => {
     login({ email: formdata.email, password: formdata.password }).then(
       (result) => {
         if (result) {
           let login_user = result?.status?.data?.user;
           setSession({
-            // user: login_user,
             token: result?.status.token,
           });
           setUserData(login_user);
