@@ -1,10 +1,11 @@
 import useFetch from '../../api/fetch';
+import { setSession } from '../../api/session';
 import LogoBlack from '../../assets/TheWebFieldn_new_logo_black.png'
-import { Link } from 'react-router-dom'
+import { Link, redirect, useNavigate } from 'react-router-dom'
 
 export default function Login() {
   const {data, error, loading, fetchData} = useFetch();
-  console.log(data, error, loading)
+  const navigate = useNavigate();
   
   
   const handleSubmit = async (e) => {
@@ -16,6 +17,14 @@ export default function Login() {
         user:{
           email,
           password
+        }
+      }).then(res => {
+        res = data?.status
+        console.log(res)
+
+        if(res?.code === 200){
+          setSession({user: res.data.user, token: res.token})
+          return navigate('/')
         }
       })
   }
