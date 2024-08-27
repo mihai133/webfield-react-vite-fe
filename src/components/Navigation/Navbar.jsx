@@ -50,6 +50,9 @@ function NavigationBar() {
                 <Link to={"/"} className="nav-link">
                   Home
                 </Link>
+                <Link to={"/blog"} className="nav-link">
+                  Blog
+                </Link>
                 <Link to="/about" className="nav-link">
                   About us
                 </Link>

@@ -7,6 +7,7 @@ import Login from "./auth/Login";
 import Signup from "./auth/Signup";
 import ForgotPassword from "./auth/ForgotPassword";
 import Logout from "./auth/Logout";
+import Blog from "./Blog";
 
 export const router = createBrowserRouter([
   {
@@ -16,6 +17,11 @@ export const router = createBrowserRouter([
       {
         path: "/",
         element: <Home />,
+        children: [],
+      },
+      {
+        path: "/blog",
+        element: <Blog />,
         children: [],
       },
       {
