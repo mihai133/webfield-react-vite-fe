@@ -10,7 +10,7 @@ export const fetchData = async (
   let error = null;
   let loading = false;
   // setLoading(true);
-  const baseUrl = `http://localhost:3000/${path}`;
+  const baseUrl = `http://localhost:3003/${path}`;
   const options = {
     method,
     headers: {

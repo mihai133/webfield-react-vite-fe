@@ -1,3 +1,6 @@
-@import url('./General/Structure.scss');
-@import './General/Typography.scss';
-@import './General/Navigation.scss';
+@import "./General/Variables.scss";
+@import "./General/Typography.scss";
+
+@import "./General/Structure.scss";
+@import "./General/Navigation.scss";
+@import "./General/Buttons.scss";

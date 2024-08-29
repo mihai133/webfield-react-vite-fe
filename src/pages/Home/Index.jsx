@@ -1,25 +1,47 @@
-import { useState } from "react";
+import BlurText from "../../components/Text/BlurText";
+import { Link } from "react-router-dom";
+import ShiningText from "../../components/Text/ShiningText";
+import CalBtn from "../../components/Buttons/Calbtn";
+import { isLoggedIn } from "../../api/session";
 
 const Home = () => {
-  const [count, setCount] = useState(0);
   return (
     <>
-      {/* <h1 className="text-lg">{data?.res}</h1> */}
-      <div className="card border-0">
-        <button
-          className="text-white bg-primary"
-          onClick={() => setCount((count) => count + 1)}
-        >
-          count is {count}
-        </button>
-        <p>
-          Edit <code>src/App.jsx</code> and save to test HMR
-        </p>
-      </div>
+      {/* <div className="vh-100"></div> */}
+      <div className="d-flex flex-column justify-content-center align-items-center text-center">
+        <BlurText
+          text="The only web development company that you will ever need!"
+          classname="heading-01"
+          delay={10}
+        />
 
-      {/* <p className="read-the-docs">
-        Click on the Vite and React logos to learn more
-      </p> */}
+        <ShiningText
+          text="We develop websites and web applications."
+          className="heading-04 mt-5"
+        />
+
+        <div className="d-flex justify-content-center mt-5 gap-5 align-items-center">
+          <CalBtn />
+
+          {!isLoggedIn ? (
+            <Link className="text-decoration-none text-reset" to="/login">
+              Login
+            </Link>
+          ) : (
+            <Link className="text-decoration-none text-reset" to="/about">
+              About
+            </Link>
+          )}
+        </div>
+
+        {/* image */}
+        {/* <div>
+          <ClippedImage
+            src="src/assets/the-webfield-website-startup.webp"
+            alt="Image"
+          />
+        </div> */}
+      </div>
     </>
   );
 };

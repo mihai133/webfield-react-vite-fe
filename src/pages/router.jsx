@@ -8,6 +8,7 @@ import Signup from "./auth/Signup";
 import ForgotPassword from "./auth/ForgotPassword";
 import Logout from "./auth/Logout";
 import Blog from "./Blog";
+import BlogArticle from "./Blog/components/BlogArticle";
 
 export const router = createBrowserRouter([
   {
@@ -22,6 +23,11 @@ export const router = createBrowserRouter([
       {
         path: "/blog",
         element: <Blog />,
+        children: [],
+      },
+      {
+        path: "/blog/:id",
+        element: <BlogArticle />,
         children: [],
       },
       {

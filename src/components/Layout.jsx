@@ -12,7 +12,7 @@ export default function Layout() {
             </Col>
             <Col  className="container-fluid m-0 p-0"> */}
         <NavigationBar />
-        <div className="col-12 col-md-6 mx-auto mt-5 px-3">
+        <div className="col-12 col-md-9 mx-auto mt-5 px-3">
           <Outlet />
         </div>
 

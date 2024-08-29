@@ -20,14 +20,14 @@ function NavigationBar() {
         className="Navbar-top bg-body-tertiary mb-3 shadow"
       >
         <Container fluid>
-          <Navbar.Brand href="/">
+          <Link to={"/"} className="nav-brand">
             <img
               src={LogoBlack}
               alt="TheWebFieldn logo"
               className="d-sm-block  logo-img"
               width={150}
             />
-          </Navbar.Brand>
+          </Link>
           {/* <Nav className="d-none d-lg-block ms-auto">
             <Nav.Link href="#home">Home</Nav.Link>
             <Nav.Link href="#features">Features</Nav.Link>

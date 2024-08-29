@@ -1,34 +1,21 @@
 import { useFetchWpPosts } from "../../api/WP/fetchBlogPosts";
-import { Card } from "react-bootstrap";
+import BlurText from "../../components/Text/BlurText";
+import BlogCardExcerpt from "./components/BlogCardExcerpt";
+import LoadingSpinner from "../../components/common/LoadingSpinner";
 
 export default function Blog() {
   const { posts, loading } = useFetchWpPosts();
-  console.log(posts);
+  // console.log(posts);
   return (
     <div className="container">
-      <h1>Blog</h1>
-      {loading ? (
-        <div>Loading posts...</div>
-      ) : (
-        <div className="row  row-cols-1 row-cols-md-2 row-cols-lg-3">
-          {posts.map((post) => (
-            <Card key={post.id} className="col border-0">
-              <Card.Header className="bg-transparent ">
-                <Card.Title className="fs-5 fw-bold">
-                  <div
-                    dangerouslySetInnerHTML={{ __html: post.title.rendered }}
-                  ></div>
-                </Card.Title>
-              </Card.Header>
-              <Card.Body>
-                <div
-                  dangerouslySetInnerHTML={{ __html: post.excerpt.rendered }}
-                />
-              </Card.Body>
-            </Card>
-          ))}
-        </div>
-      )}
+      <BlurText text="Blog articles" classname="heading-01" delay="80" />
+
+      {loading && <LoadingSpinner />}
+      <div className="row gap-4 mt-4">
+        {posts.map((post) => (
+          <BlogCardExcerpt key={post.id} post={post} loading={loading} />
+        ))}
+      </div>
     </div>
   );
 }

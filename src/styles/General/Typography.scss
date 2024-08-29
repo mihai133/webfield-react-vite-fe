@@ -1,4 +1,4 @@
-*{
+* {
   font-size: 1.6rem;
 }
 
@@ -16,20 +16,99 @@ h3 {
 
 h4 {
   font-size: 1.25rem;
-}  
+}
 
-p {
-  font-size: 1.6rem;
+p,
+a,
+li,
+span {
+  font-size: $base-font-size;
 }
 
 .nav-link {
   font-size: 1.6rem;
 }
 
-input, :placeholder-shown, .form-control {
+input,
+:placeholder-shown,
+.form-control {
   font-size: 1.6rem;
 }
 
 .btn {
   font-size: 1.6rem;
+}
+
+.word {
+  display: inline-block;
+  will-change: transform, filter, opacity;
+}
+
+.heading-01 {
+  font-size: $h1-font-size;
+  font-weight: 700;
+  line-height: 1.2;
+  margin-bottom: 0.5rem;
+  margin-top: 0;
+}
+
+.heading-02 {
+  font-size: $h2-font-size;
+  font-weight: 700;
+  line-height: 1.2;
+  margin-bottom: 0.5rem;
+  margin-top: 0;
+}
+
+.heading-03 {
+  font-size: $h3-font-size;
+  font-weight: 700;
+  line-height: 1.2;
+  margin-bottom: 0.5rem;
+  margin-top: 0;
+}
+
+.heading-04 {
+  font-size: $h4-font-size;
+  font-weight: 700;
+  line-height: 1.2;
+  margin-bottom: 0.5rem;
+  margin-top: 0;
+}
+
+.heading-05 {
+  font-size: $h5-font-size;
+  font-weight: 700;
+  line-height: 1.2;
+  margin-bottom: 0.5rem;
+  margin-top: 0;
+}
+
+// ------ Text ------
+.shining-text {
+  color: #a7a7a7a4;
+  background: linear-gradient(
+    120deg,
+    rgba(0, 0, 0, 0) 40%,
+    rgba(0, 0, 0, 0.8) 50%,
+    rgba(0, 0, 0, 0) 60%
+  );
+  background-size: 200% 100%;
+  -webkit-background-clip: text;
+  background-clip: text;
+  display: inline-block;
+  animation: shine 5s linear infinite;
+}
+
+@keyframes shine {
+  0% {
+    background-position: 100%;
+  }
+  100% {
+    background-position: -100%;
+  }
+}
+
+.shining-text.disabled {
+  animation: none;
 }
