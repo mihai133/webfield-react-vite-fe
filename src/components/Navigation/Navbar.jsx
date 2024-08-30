@@ -61,7 +61,7 @@ function NavigationBar() {
                   id={`offcanvasNavbarDropdown-expand-md`}
                   align={{ sm: "end" }}
                 >
-                  <Link to="#" className="dropdown-item">
+                  <Link to="/profile" className="dropdown-item">
                     Profile
                   </Link>
                   <NavDropdown.Divider />

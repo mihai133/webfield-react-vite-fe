@@ -1,4 +1,3 @@
-/* eslint-disable react/prop-types */
 import { useEffect } from "react";
 import { setSession } from "./session";
 import { useDefaultRoute } from "../utils/router.utils";
@@ -9,6 +8,7 @@ export default function SetHeaders(props) {
 
   const setUserSession = (user) => {
     setSession({
+      userId: user?.id,
       email: user?.email,
       name: user?.name,
     });

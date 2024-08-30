@@ -3,6 +3,7 @@ import { isLoggedIn } from "../api/session";
 
 export const UserContext = createContext({
   user: {
+    userId: "",
     email: "",
     name: "",
   },

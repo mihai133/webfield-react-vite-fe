@@ -1,6 +1,7 @@
 export const getUserFromSession = () => {
   if (!getSession()) return {};
   return {
+    userId: getSession().userId,
     name: getSession().name,
     email: getSession().email,
   };

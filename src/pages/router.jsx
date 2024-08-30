@@ -9,6 +9,7 @@ import ForgotPassword from "./auth/ForgotPassword";
 import Logout from "./auth/Logout";
 import Blog from "./Blog";
 import BlogArticle from "./Blog/components/BlogArticle";
+import Profile from "./Profile";
 
 export const router = createBrowserRouter([
   {
@@ -54,6 +55,11 @@ export const router = createBrowserRouter([
       {
         path: "/forgot-password",
         element: <ForgotPassword />,
+        children: [],
+      },
+      {
+        path: "/Profile",
+        element: <Profile />,
         children: [],
       },
     ],
