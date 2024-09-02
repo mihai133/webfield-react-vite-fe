@@ -1,4 +1,4 @@
-import { Link, Outlet, redirect, useNavigate } from "react-router-dom";
+import { Link, Outlet, useNavigate } from "react-router-dom";
 import { useUserContext } from "../context/UserContext";
 import LogoBlack from "../assets/TheWebFieldn_new_logo_black.png";
 import NavItem from "../components/common/NavItem";
@@ -6,7 +6,7 @@ import { useDefaultRoute } from "../utils/router.utils";
 import { NavDropdown } from "react-bootstrap";
 import { isLoggedIn } from "../api/session";
 import { useEffect } from "react";
-import { Box, BoxArrowRight, PersonCircle } from "react-bootstrap-icons";
+import { BoxArrowRight, PersonCircle } from "react-bootstrap-icons";
 
 export default function PrivateLayout({ PageTitle = "Dashboard" }) {
   const { user } = useUserContext();
