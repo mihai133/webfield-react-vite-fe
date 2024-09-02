@@ -10,6 +10,7 @@ export default function SetHeaders(props) {
     setSession({
       userId: user?.id,
       email: user?.email,
+      company_name: user?.company_name,
       name: user?.name,
     });
   };

@@ -20,6 +20,7 @@ export default function Profile() {
       let newUser = {
         userId: res.userId,
         name: res.name,
+        company_name: res.company_name,
         email: res.email,
       };
       setSession(newUser);
@@ -33,9 +34,6 @@ export default function Profile() {
         <Card.Title as={"h1"}>Profile</Card.Title>
       </Card.Header>
       <Card.Body>
-        <Card.Text>Id: {user.userId}</Card.Text>
-        <Card.Text>Name: {user.name}</Card.Text>
-        <Card.Text>Email: {user.email}</Card.Text>
         <form onSubmit={handleSubmit}>
           <div className="form-outline mb-4">
             <label className="form-label" htmlFor="name">
@@ -51,6 +49,22 @@ export default function Profile() {
               onChange={(e) => handleChange(e)}
             />
           </div>
+
+          <div className="form-outline mb-4">
+            <label className="form-label" htmlFor="company_name">
+              Company
+            </label>
+            <input
+              type="text"
+              id="company"
+              name="company_name"
+              autoComplete="company"
+              className="form-control"
+              value={userData.company_name}
+              onChange={(e) => handleChange(e)}
+            />
+          </div>
+
           <div className="form-outline mb-4">
             <label className="form-label" htmlFor="email">
               Email

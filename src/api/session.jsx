@@ -3,6 +3,7 @@ export const getUserFromSession = () => {
   return {
     userId: getSession().userId,
     name: getSession().name,
+    company_name: getSession().company_name,
     email: getSession().email,
   };
 };
