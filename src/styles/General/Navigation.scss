@@ -12,3 +12,38 @@
   padding: 4.6rem 1.6rem;
   // position: fixed;
 }
+
+// ---- PRIVATE NAV ----
+.user-nav-dropdown {
+  // Hide dropdown arrow
+  .dropdown-toggle::after {
+    display: none;
+  }
+}
+
+// ---- SIDEBAR ----
+.sidebar-inner {
+  height: 100%;
+  display: flex;
+  flex-direction: column;
+  width: 100%;
+  // justify-content: space-between;
+}
+
+.sidebar-nav-item {
+  text-align: start;
+  border-radius: 0.4rem;
+  background-color: rgb(211, 211, 211);
+  color: rgb(102, 102, 102);
+  text-decoration: none;
+  font-size: $base-font-size;
+  font-weight: 500;
+  padding: 1rem 1.6rem;
+  transition: all 0.3s ease-in-out;
+
+  &:hover {
+    color: rgb(0, 0, 0);
+    background-color: rgba(12, 148, 137, 0.308);
+    transition: all 0.3s ease-in-out;
+  }
+}

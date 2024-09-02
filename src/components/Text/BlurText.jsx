@@ -2,7 +2,6 @@ import { useSprings, animated } from "@react-spring/web";
 import { useEffect, useRef, useState } from "react";
 
 export default function BlurText({ text, delay = 50, classname = " " }) {
-  console.log(text);
   const words = text.split(" ");
   const [inView, setInView] = useState(false);
   const ref = useRef(null);
