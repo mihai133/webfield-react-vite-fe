@@ -1,9 +1,9 @@
 import { Outlet } from "react-router-dom";
-import NavigationBar from "./Navigation/Navbar";
+import NavigationBar from "../components/Navigation/Navbar";
 // import Header from "./Header"
 // import Footer from "./Footer"
 
-export default function Layout() {
+export default function PublicLayout() {
   return (
     <>
       <main className="container-fluid row m-0 p-0">

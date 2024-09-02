@@ -8,6 +8,8 @@ import Navbar from "react-bootstrap/Navbar";
 import { Link } from "react-router-dom";
 import { isLoggedIn } from "../../api/session";
 import { useUserContext } from "../../context/UserContext";
+import { PersonCircle } from "react-bootstrap-icons";
+import NavItem from "../common/NavItem";
 
 function NavigationBar() {
   const { user } = useUserContext();
@@ -28,11 +30,6 @@ function NavigationBar() {
               width={150}
             />
           </Link>
-          {/* <Nav className="d-none d-lg-block ms-auto">
-            <Nav.Link href="#home">Home</Nav.Link>
-            <Nav.Link href="#features">Features</Nav.Link>
-            <Nav.Link href="#pricing">Pricing</Nav.Link>
-          </Nav> */}
 
           <Navbar.Toggle aria-controls={`offcanvasNavbar-expand-sm`} />
           <Navbar.Offcanvas
@@ -47,38 +44,30 @@ function NavigationBar() {
             </Offcanvas.Header>
             <Offcanvas.Body>
               <Nav className="d-flex gap-2 align-items-center justify-content-end flex-grow-1 pe-3">
-                <Link to={"/"} className="nav-link">
-                  Home
-                </Link>
-                <Link to={"/blog"} className="nav-link">
-                  Blog
-                </Link>
-                <Link to="/about" className="nav-link">
-                  About us
-                </Link>
+                <NavItem text="Home" link="/" className="nav-link" />
+                <NavItem text="Blog" link="/blog" className="nav-link" />
+                <NavItem text="About us" link="/about" className="nav-link" />
                 <NavDropdown
                   title={user.name || "Account"}
                   id={`offcanvasNavbarDropdown-expand-md`}
                   align={{ sm: "end" }}
                 >
-                  <Link to="#" className="dropdown-item">
-                    Profile
-                  </Link>
-                  <NavDropdown.Divider />
                   {!isLoggedIn() ? (
                     <>
-                      <Link to="/signup" className="dropdown-item">
-                        Sign up
-                      </Link>
-                      <Link to="/login" className="dropdown-item">
-                        Login
-                      </Link>
+                      <NavItem text="Sign up" link="/signup" />
+                      <NavItem text="Login" link="/login" />
                     </>
                   ) : (
-                    <Link to="/logout" className="dropdown-item">
-                      Logout
-                    </Link>
-                    // <Logout />
+                    <>
+                      <NavItem
+                        text="Dashboard"
+                        link="/dashboard"
+                        icon={<PersonCircle />}
+                      />
+
+                      <NavDropdown.Divider />
+                      <NavItem text="Logout" link="/logout" />
+                    </>
                   )}
                 </NavDropdown>
               </Nav>

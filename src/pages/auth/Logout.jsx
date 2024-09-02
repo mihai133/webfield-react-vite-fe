@@ -12,9 +12,8 @@ export default function Logout() {
     logout().then(() => {
       removeSession();
       window.location = defaultLandingPage;
-    }),
-      [];
-  });
+    });
+  }, []);
 
   return <>loggedOut</>;
 }
