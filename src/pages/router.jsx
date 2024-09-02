@@ -1,8 +1,7 @@
-import { createBrowserRouter } from "react-router-dom";
+import { createBrowserRouter, Navigate } from "react-router-dom";
 
 import Home from "./Home";
 import About from "./About/Index";
-import Layout from "../components/Layout";
 import Login from "./auth/Login";
 import Signup from "./auth/Signup";
 import ForgotPassword from "./auth/ForgotPassword";
@@ -10,11 +9,15 @@ import Logout from "./auth/Logout";
 import Blog from "./Blog";
 import BlogArticle from "./Blog/components/BlogArticle";
 import Profile from "./Profile";
+import DashboardIndex from "./Dashboard/DashboardIndex";
+import PrivateLayout from "./PrivateLayout";
+import PublicLayout from "./PublicLayout";
+import NotFound from "./NotFound";
 
 export const router = createBrowserRouter([
+  // PUBLIC ROUTES
   {
-    path: "/",
-    element: <Layout />,
+    element: <PublicLayout />,
     children: [
       {
         path: "/",
@@ -57,11 +60,26 @@ export const router = createBrowserRouter([
         element: <ForgotPassword />,
         children: [],
       },
+    ],
+  },
+  // PRIVATE ROUTES
+  {
+    element: <PrivateLayout />,
+    children: [
       {
-        path: "/Profile",
+        path: "/dashboard",
+        element: <DashboardIndex />,
+        children: [],
+      },
+      {
+        path: "/profile",
         element: <Profile />,
         children: [],
       },
     ],
+  },
+  {
+    path: "*",
+    element: <NotFound />,
   },
 ]);
