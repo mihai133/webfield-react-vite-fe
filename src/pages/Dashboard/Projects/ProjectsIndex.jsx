@@ -1,32 +1,38 @@
 import { Badge, Button, Card } from "react-bootstrap";
 import { useNavigate } from "react-router-dom";
-import { fetchData } from "../../../api/fetch";
+import { fetchData, newDataFetcher } from "../../../api/fetch";
+import { useQuery } from "@tanstack/react-query";
 
 export default function ProjectsIndex() {
   const navigate = useNavigate();
 
-  const projects = {
-    data: [
-      {
-        id: 1,
-        name: "Project 1",
-        description: "Lorem ipsum dolor sit amet, consectetur adipiscing elit.",
-        status: "in_progress",
-      },
-      {
-        id: 2,
-        name: "Project 2",
-        description: "Lorem ipsum dolor sit amet, consectetur adipiscing elit.",
-        status: "in_progress",
-      },
-      {
-        id: 3,
-        name: "Project 3",
-        description: "Lorem ipsum dolor sit amet, consectetur adipiscing elit.",
-        status: "in_progress",
-      },
-    ],
-  };
+  const { data: projects, isLoading } = useQuery({
+    queryFn: () => newDataFetcher("/projects"),
+    queryKey: ["projects"],
+  });
+
+  // const projects = {
+  //   data: [
+  //     {
+  //       id: 1,
+  //       name: "Project 1",
+  //       description: "Lorem ipsum dolor sit amet, consectetur adipiscing elit.",
+  //       status: "in_progress",
+  //     },
+  //     {
+  //       id: 2,
+  //       name: "Project 2",
+  //       description: "Lorem ipsum dolor sit amet, consectetur adipiscing elit.",
+  //       status: "in_progress",
+  //     },
+  //     {
+  //       id: 3,
+  //       name: "Project 3",
+  //       description: "Lorem ipsum dolor sit amet, consectetur adipiscing elit.",
+  //       status: "in_progress",
+  //     },
+  //   ],
+  // };
 
   // if (!data) return <></>;
 

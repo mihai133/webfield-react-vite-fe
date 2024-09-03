@@ -5,15 +5,18 @@ import "./styles/App.scss";
 import { getUserFromSession, isLoggedIn } from "./api/session";
 import { useState } from "react";
 import { UserContext } from "./context/UserContext";
+import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
 
 export default function App() {
   const [user, setUser] = useState({ ...getUserFromSession() });
-
+  const queryClient = new QueryClient();
   return (
     <>
-      <UserContext.Provider value={{ user, setUser, isLoggedIn: isLoggedIn }}>
-        <RouterProvider router={router} />
-      </UserContext.Provider>
+      <QueryClientProvider client={queryClient}>
+        <UserContext.Provider value={{ user, setUser, isLoggedIn: isLoggedIn }}>
+          <RouterProvider router={router} />
+        </UserContext.Provider>
+      </QueryClientProvider>
     </>
   );
 }

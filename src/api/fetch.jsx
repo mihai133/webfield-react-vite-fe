@@ -1,6 +1,56 @@
 import { getSession, isLoggedIn } from "./session";
 
-// export const dataFetcher = async (path, method = "GET", body = null, headers = {}) => {
+// export const useFMutation = (mutation, options = {}) => {
+//   mutationFn: (formData) =>
+//     newDataFetcher(`projects/${projectId}`, "PUT", { ...formData }),
+//   // onSuccess: () => {
+//   //   navigate("/projects");
+//   // },
+//   // onError: (err) => {
+//   //   console.log(err);
+//   // },
+// };
+
+export const newDataFetcher = async (
+  path,
+  method = "GET",
+  headers = {},
+  body = null
+) => {
+  let data = {};
+  let error = null;
+  let loading = false;
+  const baseUrl = `http://localhost:3003/${path}`;
+  const options = {
+    method,
+    headers: {
+      "Content-Type": "application/json",
+      Authorization: `${isLoggedIn() ? `Bearer ${getSession()?.token}` : ""}`,
+      ...headers,
+    },
+    ...body,
+  };
+
+  if (body) {
+    options.body = JSON.stringify(body);
+  }
+
+  await fetch(baseUrl, options)
+    .then(async (r) => {
+      if (!r.ok) {
+        error = r.error;
+        return;
+      }
+      await r.json().then((r) => {
+        data = r;
+      });
+    })
+    .catch((e) => {
+      error = e.message;
+    });
+
+  return { data, error };
+};
 
 export const fetchData = async (
   path,
@@ -41,15 +91,6 @@ export const fetchData = async (
     error = e?.message;
     console.log(e);
   }
-
-  //   .catch((err) => {
-
-  //     // setError(err.message);
-  //   })
-  //   .finally(() => {
-  //     // setLoading(false);
-  //   });
-
   return { ...data, error, loading };
 };
 

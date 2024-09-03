@@ -16,6 +16,7 @@ import NotFound from "./NotFound";
 import ProjectsIndex from "./Dashboard/Projects/ProjectsIndex";
 import Project from "./Dashboard/Projects/Project";
 import ProjectNew from "./Dashboard/Projects/ProjectNew";
+import ProjectEdit from "./Dashboard/Projects/ProjectEdit";
 
 export const router = createBrowserRouter([
   // PUBLIC ROUTES
@@ -92,6 +93,11 @@ export const router = createBrowserRouter([
       {
         path: "/projects/:id",
         element: <Project />,
+        children: [],
+      },
+      {
+        path: "/projects/:id/edit",
+        element: <ProjectEdit />,
         children: [],
       },
     ],
