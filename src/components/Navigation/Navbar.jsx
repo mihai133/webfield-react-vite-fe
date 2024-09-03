@@ -9,7 +9,7 @@ import { Link } from "react-router-dom";
 import { isLoggedIn } from "../../api/session";
 import { useUserContext } from "../../context/UserContext";
 import { PersonCircle } from "react-bootstrap-icons";
-import NavItem from "../common/NavItem";
+import { NavItem } from "../common/NavItem";
 
 function NavigationBar() {
   const { user } = useUserContext();

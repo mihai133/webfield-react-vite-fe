@@ -1,17 +1,19 @@
-import { Link, Outlet, useNavigate } from "react-router-dom";
+import { Link, Outlet, useLocation, useNavigate } from "react-router-dom";
 import { useUserContext } from "../context/UserContext";
 import LogoBlack from "../assets/TheWebFieldn_new_logo_black.png";
-import NavItem from "../components/common/NavItem";
+import { NavItem } from "../components/common/NavItem";
 import { useDefaultRoute } from "../utils/router.utils";
 import { NavDropdown } from "react-bootstrap";
 import { isLoggedIn } from "../api/session";
 import { useEffect } from "react";
 import { BoxArrowRight, PersonCircle } from "react-bootstrap-icons";
 
-export default function PrivateLayout({ PageTitle = "Dashboard" }) {
+export default function PrivateLayout() {
   const { user } = useUserContext();
   const defaultLandingPage = useDefaultRoute();
   const navigate = useNavigate();
+
+  const PageTitle = useLocation()?.pathname.split("/")[1];
 
   useEffect(() => {
     if (!isLoggedIn()) navigate("/login");
@@ -35,14 +37,6 @@ export default function PrivateLayout({ PageTitle = "Dashboard" }) {
                   />
                 </Link>
               </div>
-              {/* <div className="user-info">
-                  <div className="name">
-                    <h4>{user.name}</h4>
-                  </div>
-                  <div className="designation">
-                    <h6>{user.company_name}</h6>
-                  </div>
-                </div> */}
               <div className="mx-auto d-flex flex-column gap-3 w-100 mt-5">
                 <NavItem
                   text="Dashboard"
@@ -72,7 +66,7 @@ export default function PrivateLayout({ PageTitle = "Dashboard" }) {
 
       <div className="col-12 col-md-10 mx-auto mt-5 px-3 px-md-4 d-flex flex-column">
         <div className="d-flex justify-content-between align-items-center">
-          <h1>{PageTitle}</h1>
+          <h1 className="text-capitalize">{PageTitle}</h1>
 
           <NavDropdown
             className="user-nav-dropdown bg-light d-flex flex-column align-items-center p-3 rounded-circle border-dark border border-1 fs-4"
@@ -86,16 +80,17 @@ export default function PrivateLayout({ PageTitle = "Dashboard" }) {
             id={`offcanvasNavbarDropdown-expand-md`}
             align={{ sm: "end" }}
           >
-            <NavDropdown.Item>
+            <NavDropdown.Item as={"div"}>
               <NavItem text="Profile" link="/profile" icon={<PersonCircle />} />
             </NavDropdown.Item>
-            <NavDropdown.Item>
+
+            <NavDropdown.Item as={"div"}>
               <NavItem text="Log out" link="/logout" icon={<BoxArrowRight />} />
             </NavDropdown.Item>
           </NavDropdown>
         </div>
 
-        <div className="container-fluid m-0 p-0">
+        <div className="container-fluid m-0 pt-5">
           <Outlet />
         </div>
       </div>

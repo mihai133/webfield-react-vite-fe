@@ -1,4 +1,6 @@
-import { getSession } from "./session";
+import { getSession, isLoggedIn } from "./session";
+
+// export const dataFetcher = async (path, method = "GET", body = null, headers = {}) => {
 
 export const fetchData = async (
   path,
@@ -15,6 +17,7 @@ export const fetchData = async (
     method,
     headers: {
       "Content-Type": "application/json",
+      Authorization: `${isLoggedIn() ? `Bearer ${getSession()?.token}` : ""}`,
       ...headers,
     },
   };

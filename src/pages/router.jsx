@@ -13,6 +13,9 @@ import DashboardIndex from "./Dashboard/DashboardIndex";
 import PrivateLayout from "./PrivateLayout";
 import PublicLayout from "./PublicLayout";
 import NotFound from "./NotFound";
+import ProjectsIndex from "./Dashboard/Projects/ProjectsIndex";
+import Project from "./Dashboard/Projects/Project";
+import ProjectNew from "./Dashboard/Projects/ProjectNew";
 
 export const router = createBrowserRouter([
   // PUBLIC ROUTES
@@ -74,6 +77,21 @@ export const router = createBrowserRouter([
       {
         path: "/profile",
         element: <Profile />,
+        children: [],
+      },
+      {
+        path: "/projects",
+        element: <ProjectsIndex />,
+        children: [],
+      },
+      {
+        path: "/projects/new",
+        element: <ProjectNew />,
+        children: [],
+      },
+      {
+        path: "/projects/:id",
+        element: <Project />,
         children: [],
       },
     ],
