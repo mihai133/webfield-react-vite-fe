@@ -1,27 +1,26 @@
 import React from "react";
 import { Button, Card, Form } from "react-bootstrap";
 import { useNavigate } from "react-router-dom";
-import { fetchData } from "../../../api/fetch";
+import { useFMutation } from "../../../api/fetch";
 
 export default function ProjectNew() {
   const navigate = useNavigate();
-  const [formData, setFormData] = React.useState({
-    name: "",
-    description: "",
-    status: "in_progress",
+
+  const [addProject] = useFMutation("projects", "POST", {
+    onSuccess: () => {
+      navigate("/projects");
+    },
   });
 
-  const handleSubmit = async (event) => {
+  const handleSubmit = (event) => {
     event.preventDefault();
+    const formData = {
+      name: event.target.name.value,
+      description: event.target.description.value,
+      status: event.target.status.value,
+    };
 
-    await fetchData("projects", "POST", { ...formData }).then((r) => {
-      if (r.error) {
-        console.log(r.error);
-      } else {
-        navigate("/projects");
-      }
-    });
-    // navigate("/projects");
+    addProject({ ...formData });
   };
 
   return (
@@ -35,9 +34,10 @@ export default function ProjectNew() {
               <Form.Control
                 type="text"
                 placeholder="Enter title"
-                onChange={(e) =>
-                  setFormData({ ...formData, name: e.target.value })
-                }
+                name="name"
+                // onChange={(e) =>
+                //   setFormData({ ...formData, name: e.target.value })
+                // }
               />
             </Form.Group>
             <Form.Group className="mb-3" controlId="formBasicDescription">
@@ -46,19 +46,21 @@ export default function ProjectNew() {
                 as="textarea"
                 placeholder="Enter description"
                 rows="5"
-                onChange={(e) =>
-                  setFormData({ ...formData, description: e.target.value })
-                }
+                name="description"
+                // onChange={(e) =>
+                //   setFormData({ ...formData, description: e.target.value })
+                // }
               />
             </Form.Group>
             <Form.Group className="mb-3" controlId="formBasicStatus">
               <Form.Label>Status</Form.Label>
               <Form.Control
                 as="select"
-                defaultValue={formData.status}
-                onChange={(e) =>
-                  setFormData({ ...formData, status: e.target.value })
-                }
+                name="status"
+                // defaultValue={formData.status}
+                // onChange={(e) =>
+                //   setFormData({ ...formData, status: e.target.value })
+                // }
               >
                 <option value="in_progress">In progress</option>
                 <option value="completed">Completed</option>

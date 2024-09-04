@@ -1,15 +1,42 @@
+import { useState } from "react";
 import { getSession, isLoggedIn } from "./session";
+import { useMutation, useQuery } from "@tanstack/react-query";
+import { useNavigate } from "react-router-dom";
 
-// export const useFMutation = (mutation, options = {}) => {
-//   mutationFn: (formData) =>
-//     newDataFetcher(`projects/${projectId}`, "PUT", { ...formData }),
-//   // onSuccess: () => {
-//   //   navigate("/projects");
-//   // },
-//   // onError: (err) => {
-//   //   console.log(err);
-//   // },
-// };
+export const useFQuery = (endpoint, key = [], options = {}) => {
+  const {
+    isPending,
+    isSuccess,
+    isError,
+    data: queryResult,
+  } = useQuery({
+    queryFn: async () => fetchData(endpoint),
+    queryKey: [endpoint, ...key],
+
+    ...options,
+  });
+
+  return [queryResult?.data, isPending, isSuccess, isError];
+};
+
+export const useFMutation = (endpoint, method, options = {}) => {
+  const [resultObject, setResultObject] = useState(null);
+
+  const mutationFn = useMutation({
+    mutationFn: (variables) => fetchData(endpoint, method, variables),
+    onSettled: (data) => {
+      console.log(data);
+      setResultObject(data);
+    },
+    ...options,
+  });
+
+  const callFunction = (variables) => {
+    return mutationFn.mutate(variables);
+  };
+
+  return [callFunction, mutationFn.status];
+};
 
 export const newDataFetcher = async (
   path,
@@ -79,8 +106,7 @@ export const fetchData = async (
   try {
     await fetch(baseUrl, options).then(async (response) => {
       if (!response.ok) {
-        console.log(response);
-        throw new Error(`Error: ${response.status.message}`);
+        throw new Error(`Error: ${response.statusText}`);
       }
       await response.json().then((r) => {
         data = r;
@@ -91,7 +117,7 @@ export const fetchData = async (
     error = e?.message;
     console.log(e);
   }
-  return { ...data, error, loading };
+  return { data, error, loading };
 };
 
 export async function login({ email, password }) {

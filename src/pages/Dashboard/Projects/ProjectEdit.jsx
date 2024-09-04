@@ -1,32 +1,20 @@
-import { useState } from "react";
 import { Button, Card, Form } from "react-bootstrap";
-import { fetchData, newDataFetcher } from "../../../api/fetch";
+import { newDataFetcher, useFMutation, useFQuery } from "../../../api/fetch";
 import { useNavigate, useParams } from "react-router-dom";
-import { useMutation, useQuery } from "@tanstack/react-query";
+import { useQuery } from "@tanstack/react-query";
 
 export default function ProjectEdit() {
   const projectId = useParams().id;
   const navigate = useNavigate();
 
-  const { data: projectData, isLoading } = useQuery({
-    queryFn: () => newDataFetcher(`projects/${projectId}`),
-    queryKey: ["projects", projectId],
-  });
-
-  const mutation = useMutation({
-    mutationFn: (formData) =>
-      fetchData(`projects/${projectId}`, "PUT", { ...formData }),
-    onSuccess: () => {
+  const [data] = useFQuery(`projects/${projectId}`, [projectId]);
+  const [updateProject] = useFMutation(`projects/${projectId}`, "PUT", {
+    onSuccess: (data) => {
       navigate("/projects");
     },
-    onError: (err) => {
-      console.log(err);
-    },
   });
 
-  const project = projectData?.data;
-
-  console.log(project);
+  const project = data;
 
   const handleSubmit = async (event) => {
     event.preventDefault();
@@ -38,20 +26,10 @@ export default function ProjectEdit() {
       status: event.target.status.value,
     };
 
-    console.log(formData);
-
-    mutation.mutate(formData);
-
-    // await fetchData(`projects/${projectId}`, "PUT", { ...formData }).then(
-    //   (r) => {
-    //     if (r.error) {
-    //       console.log(r.error);
-    //     } else {
-    //       navigate("/projects");
-    //     }
-    //   }
-    // );
+    updateProject(formData);
   };
+
+  if (!project) return <></>;
 
   return (
     <div className="col-md-6 col-lg-4 col-xl-3 mx-auto">

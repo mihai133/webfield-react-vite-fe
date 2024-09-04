@@ -1,40 +1,12 @@
 import { Badge, Button, Card } from "react-bootstrap";
 import { useNavigate } from "react-router-dom";
-import { fetchData, newDataFetcher } from "../../../api/fetch";
+import { fetchData, newDataFetcher, useFQuery } from "../../../api/fetch";
 import { useQuery } from "@tanstack/react-query";
 
 export default function ProjectsIndex() {
   const navigate = useNavigate();
 
-  const { data: projects, isLoading } = useQuery({
-    queryFn: () => newDataFetcher("/projects"),
-    queryKey: ["projects"],
-  });
-
-  // const projects = {
-  //   data: [
-  //     {
-  //       id: 1,
-  //       name: "Project 1",
-  //       description: "Lorem ipsum dolor sit amet, consectetur adipiscing elit.",
-  //       status: "in_progress",
-  //     },
-  //     {
-  //       id: 2,
-  //       name: "Project 2",
-  //       description: "Lorem ipsum dolor sit amet, consectetur adipiscing elit.",
-  //       status: "in_progress",
-  //     },
-  //     {
-  //       id: 3,
-  //       name: "Project 3",
-  //       description: "Lorem ipsum dolor sit amet, consectetur adipiscing elit.",
-  //       status: "in_progress",
-  //     },
-  //   ],
-  // };
-
-  // if (!data) return <></>;
+  const [projects] = useFQuery("projects", ["projects"]);
 
   return (
     <div className="container-fluid row m-0 p-0">
@@ -48,7 +20,7 @@ export default function ProjectsIndex() {
         </Button>
       </div>
       <div className="projects-list d-flex flex-column justify-content-between gap-3 mt-4">
-        {projects?.data?.map((project) => (
+        {projects?.map((project) => (
           <Card
             className="card-project cursor-pointer"
             key={project.id}

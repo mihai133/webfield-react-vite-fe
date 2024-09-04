@@ -20,10 +20,12 @@ export default function Login(props) {
   const handleSubmit = async () => {
     login({ email: formdata.email, password: formdata.password }).then(
       (result) => {
+        console.log(result);
         if (result) {
-          let login_user = result?.status?.data?.user;
+          let login_user = result?.data?.status?.data?.user;
+          console.log(login_user);
           setSession({
-            token: result?.status.token,
+            token: result?.data?.status.token,
           });
           setUserData(login_user);
         }

@@ -28,9 +28,9 @@ export default function Signup(props) {
       password: password,
     }).then((result) => {
       if (result) {
-        let signup_user = result?.status?.data;
+        let signup_user = result?.data?.status?.data;
         setSession({
-          token: result?.status.token,
+          token: result?.data?.status.token,
         });
         setUserData(signup_user);
       }
