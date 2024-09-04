@@ -1,4 +1,3 @@
-import React from "react";
 import { useNavigate, useParams } from "react-router-dom";
 import { useFMutation, useFQuery } from "../../../api/fetch";
 import { Button, Card } from "react-bootstrap";
@@ -8,7 +7,7 @@ export default function Project() {
   const projectId = useParams().id;
   const navigate = useNavigate();
 
-  const [data] = useFQuery(`projects/${projectId}`, [projectId]);
+  const [data, isPending] = useFQuery(`projects/${projectId}`, [projectId]);
   const [deleteProject] = useFMutation(`projects/${projectId}`, "DELETE", {
     onSuccess: () => {
       navigate("/projects");
@@ -19,7 +18,7 @@ export default function Project() {
     deleteProject();
   }
 
-  console.log(data);
+  if (isPending) return <div>Loading...</div>;
 
   return (
     <Card>

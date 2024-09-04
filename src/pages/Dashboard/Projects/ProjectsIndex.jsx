@@ -1,12 +1,13 @@
 import { Badge, Button, Card } from "react-bootstrap";
 import { useNavigate } from "react-router-dom";
-import { fetchData, newDataFetcher, useFQuery } from "../../../api/fetch";
-import { useQuery } from "@tanstack/react-query";
+import { useFQuery } from "../../../api/fetch";
 
 export default function ProjectsIndex() {
   const navigate = useNavigate();
 
-  const [projects] = useFQuery("projects", ["projects"]);
+  const [projects, isPending] = useFQuery("projects", ["projects"]);
+
+  if (isPending) return <div>Loading...</div>;
 
   return (
     <div className="container-fluid row m-0 p-0">

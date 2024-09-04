@@ -1,7 +1,6 @@
 import { Button, Card, Form } from "react-bootstrap";
-import { newDataFetcher, useFMutation, useFQuery } from "../../../api/fetch";
+import { useFMutation, useFQuery } from "../../../api/fetch";
 import { useNavigate, useParams } from "react-router-dom";
-import { useQuery } from "@tanstack/react-query";
 
 export default function ProjectEdit() {
   const projectId = useParams().id;
@@ -9,7 +8,7 @@ export default function ProjectEdit() {
 
   const [data] = useFQuery(`projects/${projectId}`, [projectId]);
   const [updateProject] = useFMutation(`projects/${projectId}`, "PUT", {
-    onSuccess: (data) => {
+    onSuccess: () => {
       navigate("/projects");
     },
   });
@@ -18,7 +17,7 @@ export default function ProjectEdit() {
 
   const handleSubmit = async (event) => {
     event.preventDefault();
-    console.log(event.target);
+
     const formData = {
       id: projectId,
       name: event.target.name.value,
