@@ -44,7 +44,12 @@ export default function Project() {
       </Card.Header>
       <Card.Body>
         <Card.Text>{data?.description}</Card.Text>
-        <Card.Img src={"http://localhost:3003" + fileUrl} />
+        <Card.Img
+          src={data?.image}
+          alt="project-image"
+          className="img-fluid"
+          style={{ maxWidth: "500px" }}
+        />
       </Card.Body>
     </Card>
   );
