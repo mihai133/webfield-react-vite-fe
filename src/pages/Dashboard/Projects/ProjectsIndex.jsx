@@ -7,6 +7,7 @@ export default function ProjectsIndex() {
 
   const [projects, isPending] = useFQuery("projects", ["projects"]);
 
+  console.log(projects);
   if (isPending) return <div>Loading...</div>;
 
   return (

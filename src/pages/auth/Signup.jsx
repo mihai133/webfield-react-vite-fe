@@ -27,6 +27,7 @@ export default function Signup(props) {
       email: email,
       password: password,
     }).then((result) => {
+      console.log(result);
       if (result) {
         let signup_user = result?.data?.status?.data;
         setSession({

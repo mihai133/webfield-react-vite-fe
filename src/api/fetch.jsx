@@ -19,11 +19,17 @@ export const useFQuery = (endpoint, key = [], options = {}) => {
   return [queryResult?.data, isPending, isSuccess, isError];
 };
 
-export const useFMutation = (endpoint, method, options = {}) => {
+export const useFMutation = (
+  endpoint,
+  method,
+  options = {},
+  contentType = {}
+) => {
   const [resultObject, setResultObject] = useState(null);
-
+  console.log(contentType);
   const mutationFn = useMutation({
-    mutationFn: (variables) => fetchData(endpoint, method, variables),
+    mutationFn: (variables) =>
+      fetchData(endpoint, method, variables, contentType),
     onSettled: (data) => {
       setResultObject(data);
     },
@@ -51,22 +57,31 @@ export const fetchData = async (
   const options = {
     method,
     headers: {
-      "Content-Type": "application/json",
       Authorization: `${isLoggedIn() ? `Bearer ${getSession()?.token}` : ""}`,
       ...headers,
     },
   };
+  console.log(body);
 
-  if (body) {
+  if (body instanceof FormData) {
+    options.body = body;
+    delete options.headers["Content-Type"]; // Let the browser set this automatically
+  } else if (body) {
+    // For non-FormData payloads (like JSON)
     options.body = JSON.stringify(body);
+    options.headers["Content-Type"] = "application/json";
   }
+
+  console.log(options);
 
   try {
     await fetch(baseUrl, options).then(async (response) => {
+      console.log("Response before JSON", response);
       if (!response.ok) {
         throw new Error(`Error: ${response.statusText}`);
       }
       await response.json().then((r) => {
+        console.log("Response JSON", r);
         data = r;
         //   setData(data);
       });
@@ -90,6 +105,7 @@ export async function login({ email, password }) {
 }
 
 export async function signup({ name, email, password }) {
+  console.log(name, email, password);
   const options = {
     user: {
       name: name,
@@ -98,7 +114,9 @@ export async function signup({ name, email, password }) {
     },
   };
 
-  return await fetchData("/signup", "POST", options);
+  return await fetchData("signup", "POST", JSON.stringify(options), {
+    "Content-Type": "application/json",
+  });
 }
 
 export async function logout() {

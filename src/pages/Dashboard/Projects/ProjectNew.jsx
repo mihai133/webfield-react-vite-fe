@@ -1,25 +1,40 @@
 import { Button, Card, Form } from "react-bootstrap";
 import { useNavigate } from "react-router-dom";
 import { useFMutation } from "../../../api/fetch";
+import { useState } from "react";
 
 export default function ProjectNew() {
   const navigate = useNavigate();
-
-  const [addProject] = useFMutation("projects", "POST", {
-    onSuccess: () => {
-      navigate("/projects");
-    },
+  const [formData, setFormData] = useState({
+    name: "",
+    description: "",
+    status: "in_progress",
+    image: "",
   });
+
+  console.log(formData);
+
+  const [addProject] = useFMutation(
+    "projects",
+    "POST",
+    // {
+    //   onSuccess: () => {
+    //     navigate("/projects");
+    //   },
+    // },
+    {}
+    // { "Content-Type": "multipart/form-data" }
+  );
 
   const handleSubmit = (event) => {
     event.preventDefault();
-    const formData = {
-      name: event.target.name.value,
-      description: event.target.description.value,
-      status: event.target.status.value,
-    };
 
-    addProject({ ...formData });
+    const formInformation = new FormData();
+
+    for (const property in formData) {
+      formInformation.append(property, formData[property]);
+    }
+    addProject(formInformation);
   };
 
   return (
@@ -34,9 +49,9 @@ export default function ProjectNew() {
                 type="text"
                 placeholder="Enter title"
                 name="name"
-                // onChange={(e) =>
-                //   setFormData({ ...formData, name: e.target.value })
-                // }
+                onChange={(e) =>
+                  setFormData({ ...formData, name: e.target.value })
+                }
               />
             </Form.Group>
             <Form.Group className="mb-3" controlId="formBasicDescription">
@@ -46,9 +61,9 @@ export default function ProjectNew() {
                 placeholder="Enter description"
                 rows="5"
                 name="description"
-                // onChange={(e) =>
-                //   setFormData({ ...formData, description: e.target.value })
-                // }
+                onChange={(e) =>
+                  setFormData({ ...formData, description: e.target.value })
+                }
               />
             </Form.Group>
             <Form.Group className="mb-3" controlId="formBasicStatus">
@@ -56,15 +71,27 @@ export default function ProjectNew() {
               <Form.Control
                 as="select"
                 name="status"
-                // defaultValue={formData.status}
-                // onChange={(e) =>
-                //   setFormData({ ...formData, status: e.target.value })
-                // }
+                defaultValue={formData.status}
+                onChange={(e) =>
+                  setFormData({ ...formData, status: e.target.value })
+                }
               >
                 <option value="in_progress">In progress</option>
                 <option value="completed">Completed</option>
                 <option value="on_hold">On hold</option>
               </Form.Control>
+            </Form.Group>
+
+            <Form.Group className="mb-3" controlId="formBasicImage">
+              <Form.Label>Image</Form.Label>
+              <Form.Control
+                type="file"
+                name="image"
+                accept="image/jpg, image/jpeg, image/png"
+                onChange={(e) =>
+                  setFormData({ ...formData, image: e.target.files[0] })
+                }
+              />
             </Form.Group>
             <Button variant="primary" type="submit">
               Create Project

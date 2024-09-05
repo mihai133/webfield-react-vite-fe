@@ -18,6 +18,8 @@ export default function Project() {
     deleteProject();
   }
 
+  const fileUrl = "rails/active_storage/blobs/w9s24q2cj8uo7xcziglfc3zmtamr";
+
   if (isPending) return <div>Loading...</div>;
 
   return (
@@ -42,6 +44,7 @@ export default function Project() {
       </Card.Header>
       <Card.Body>
         <Card.Text>{data?.description}</Card.Text>
+        <Card.Img src={"http://localhost:3003" + fileUrl} />
       </Card.Body>
     </Card>
   );
