@@ -1,7 +1,7 @@
 import { useState } from "react";
 import { useUserContext } from "../../context/UserContext";
-import { fetchData } from "../../api/fetch";
-import { getSession, setSession } from "../../api/session";
+import { useFMutation } from "../../api/fetch";
+import { setSession } from "../../api/session";
 import { Card } from "react-bootstrap";
 
 export default function Profile() {
@@ -12,20 +12,23 @@ export default function Profile() {
     setUserData({ ...userData, [e.target.name]: e.target.value });
   }
 
-  function handleSubmit(e) {
-    e.preventDefault();
-    fetchData(`user/${user.userId}`, "PUT", userData, {
-      Authorization: `Bearer ${getSession()?.token}`,
-    }).then((res) => {
+  const [updateUser] = useFMutation(`user/${user.userId}`, "PUT", {
+    onSuccess: (res) => {
       let newUser = {
-        userId: res.userId,
-        name: res.name,
-        company_name: res.company_name,
-        email: res.email,
+        userId: res?.data?.userId,
+        name: res?.data?.name,
+        company_name: res?.data?.company_name,
+        email: res?.data?.email,
       };
       setSession(newUser);
       setUser(newUser);
-    });
+    },
+  });
+
+  function handleSubmit(e) {
+    e.preventDefault();
+
+    updateUser(userData);
   }
 
   return (

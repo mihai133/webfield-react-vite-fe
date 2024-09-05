@@ -17,11 +17,11 @@ export default function ProjectNew() {
   const [addProject] = useFMutation(
     "projects",
     "POST",
-    // {
-    //   onSuccess: () => {
-    //     navigate("/projects");
-    //   },
-    // },
+    {
+      onSuccess: () => {
+        navigate("/projects");
+      },
+    },
     {}
     // { "Content-Type": "multipart/form-data" }
   );

@@ -1,6 +1,6 @@
-import { useNavigate, useParams } from "react-router-dom";
+import { Link, useNavigate, useParams } from "react-router-dom";
 import { useFMutation, useFQuery } from "../../../api/fetch";
-import { Button, Card } from "react-bootstrap";
+import { Button, Card, Col, Figure, Image, NavLink } from "react-bootstrap";
 import { Pencil, X } from "react-bootstrap-icons";
 
 export default function Project() {
@@ -23,34 +23,57 @@ export default function Project() {
   if (isPending) return <div>Loading...</div>;
 
   return (
-    <Card>
-      <Card.Header className="bg-transparent d-flex justify-content-between align-items-center py-3">
-        <Card.Title className="heading-04">{data?.name}</Card.Title>
-        <div className="d-flex gap-2">
-          <Button
-            variant="outline-primary"
-            onClick={() => navigate(`/projects/${projectId}/edit`)}
-          >
-            <Pencil size={20} />
-          </Button>
-          <Button
-            variant="danger"
-            className="btn-delete-project"
-            onClick={() => handleDeleteProject()}
-          >
-            <X size={20} />
-          </Button>
-        </div>
-      </Card.Header>
-      <Card.Body>
-        <Card.Text>{data?.description}</Card.Text>
-        <Card.Img
-          src={data?.image}
-          alt="project-image"
-          className="img-fluid"
-          style={{ maxWidth: "500px" }}
-        />
-      </Card.Body>
-    </Card>
+    <>
+      <Button
+        onClick={() => navigate("/projects")}
+        variant="link"
+        className="text-decoration-none text-muted"
+      >
+        {"< Go back"}
+      </Button>
+      <Card>
+        <Card.Header className="bg-transparent d-flex justify-content-between align-items-center py-3">
+          <Card.Title className="heading-04">
+            {data?.name}
+            <Card.Text className="text-muted heading-05">
+              Status: {data?.status}
+            </Card.Text>
+            <Card.Text className="text-muted heading-05">
+              Created: {new Date(data?.created_at).toLocaleString()}
+            </Card.Text>
+          </Card.Title>
+          <div className="d-flex gap-2">
+            <Button
+              variant="outline-primary"
+              onClick={() => navigate(`/projects/${projectId}/edit`)}
+            >
+              <Pencil size={20} />
+            </Button>
+            <Button
+              variant="danger"
+              className="btn-delete-project"
+              onClick={() => handleDeleteProject()}
+            >
+              <X size={20} />
+            </Button>
+          </div>
+        </Card.Header>
+        <Card.Body className="row">
+          <Col md={2}>
+            <Figure>
+              <Figure.Image
+                src={data?.image}
+                alt="project-image"
+                width={171}
+                height={180}
+              />
+            </Figure>
+          </Col>
+          <Col>
+            <Card.Text>Description: {data?.description}</Card.Text>
+          </Col>
+        </Card.Body>
+      </Card>
+    </>
   );
 }

@@ -38,7 +38,9 @@ export default function ProjectsIndex() {
               </Badge>
             </Card.Header>
             <Card.Body>
-              <Card.Text>{project.description}</Card.Text>
+              <Card.Text className="text-truncate">
+                {project.description}
+              </Card.Text>
               {/* <Badge bg="warning" className="rounded rounded-pill text-black">
               </Badge> */}
             </Card.Body>
