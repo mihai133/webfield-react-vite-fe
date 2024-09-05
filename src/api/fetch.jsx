@@ -25,14 +25,10 @@ export const useFMutation = (
   options = {},
   contentType = {}
 ) => {
-  const [resultObject, setResultObject] = useState(null);
-  console.log(contentType);
   const mutationFn = useMutation({
     mutationFn: (variables) =>
       fetchData(endpoint, method, variables, contentType),
-    onSettled: (data) => {
-      setResultObject(data);
-    },
+
     ...options,
   });
 
@@ -61,11 +57,10 @@ export const fetchData = async (
       ...headers,
     },
   };
-  console.log(body);
 
   if (body instanceof FormData) {
     options.body = body;
-    delete options.headers["Content-Type"]; // Let the browser set this automatically
+    delete options.headers["Content-Type"];
   } else if (body) {
     // For non-FormData payloads (like JSON)
     options.body = JSON.stringify(body);
@@ -83,7 +78,6 @@ export const fetchData = async (
       await response.json().then((r) => {
         console.log("Response JSON", r);
         data = r;
-        //   setData(data);
       });
     });
   } catch (e) {
