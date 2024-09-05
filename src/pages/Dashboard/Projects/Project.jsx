@@ -18,8 +18,6 @@ export default function Project() {
     deleteProject();
   }
 
-  const fileUrl = "rails/active_storage/blobs/w9s24q2cj8uo7xcziglfc3zmtamr";
-
   if (isPending) return <div>Loading...</div>;
 
   return (
@@ -59,16 +57,20 @@ export default function Project() {
           </div>
         </Card.Header>
         <Card.Body className="row">
-          <Col md={2}>
-            <Figure>
-              <Figure.Image
-                src={data?.image}
-                alt="project-image"
-                width={171}
-                height={180}
-              />
-            </Figure>
-          </Col>
+          {data?.image ? (
+            <Col md={2}>
+              <Figure>
+                <Figure.Image
+                  src={data?.image}
+                  alt="project-image"
+                  width={171}
+                  height={180}
+                />
+              </Figure>
+            </Col>
+          ) : (
+            <></>
+          )}
           <Col>
             <Card.Text>Description: {data?.description}</Card.Text>
           </Col>

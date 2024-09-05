@@ -59,11 +59,12 @@ export default function ProjectNew() {
               <Form.Control
                 as="textarea"
                 placeholder="Enter description"
-                rows="5"
+                rows={5}
                 name="description"
                 onChange={(e) =>
                   setFormData({ ...formData, description: e.target.value })
                 }
+                style={{ height: "inherit" }}
               />
             </Form.Group>
             <Form.Group className="mb-3" controlId="formBasicStatus">
