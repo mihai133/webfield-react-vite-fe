@@ -1,11 +1,14 @@
-import { Link, useNavigate, useParams } from "react-router-dom";
+import { useNavigate, useParams } from "react-router-dom";
 import { useFMutation, useFQuery } from "../../../api/fetch";
-import { Button, Card, Col, Figure, Image, NavLink } from "react-bootstrap";
+import { Button, Card, Col, Figure } from "react-bootstrap";
 import { Pencil, X } from "react-bootstrap-icons";
+import { useState } from "react";
+import ModalPreview from "../../../components/common/ModalPreview";
 
 export default function Project() {
   const projectId = useParams().id;
   const navigate = useNavigate();
+  const [show, setShow] = useState(false);
 
   const [data, isPending] = useFQuery(`projects/${projectId}`, [projectId]);
   const [deleteProject] = useFMutation(`projects/${projectId}`, "DELETE", {
@@ -16,6 +19,10 @@ export default function Project() {
 
   function handleDeleteProject() {
     deleteProject();
+  }
+
+  function handleShow() {
+    setShow(true);
   }
 
   if (isPending) return <div>Loading...</div>;
@@ -29,7 +36,7 @@ export default function Project() {
       >
         {"< Go back"}
       </Button>
-      <Card>
+      <Card className="mt-4">
         <Card.Header className="bg-transparent d-flex justify-content-between align-items-center py-3">
           <Card.Title className="heading-04">
             {data?.name}
@@ -42,7 +49,7 @@ export default function Project() {
           </Card.Title>
           <div className="d-flex gap-2">
             <Button
-              variant="outline-primary"
+              variant="outline-secondary"
               onClick={() => navigate(`/projects/${projectId}/edit`)}
             >
               <Pencil size={20} />
@@ -59,7 +66,7 @@ export default function Project() {
         <Card.Body className="row">
           {data?.image ? (
             <Col md={2}>
-              <Figure>
+              <Figure onClick={() => handleShow(true)}>
                 <Figure.Image
                   src={data?.image}
                   alt="project-image"
@@ -76,6 +83,12 @@ export default function Project() {
           </Col>
         </Card.Body>
       </Card>
+
+      <ModalPreview show={show} setShow={setShow} title="Project Image Preview">
+        <Figure>
+          <Figure.Image src={data?.image} alt="project-image" />
+        </Figure>
+      </ModalPreview>
     </>
   );
 }

@@ -12,8 +12,6 @@ export default function ProjectNew() {
     image: "",
   });
 
-  console.log(formData);
-
   const [addProject] = useFMutation(
     "projects",
     "POST",
@@ -44,23 +42,29 @@ export default function ProjectNew() {
         <Card.Body>
           <Form onSubmit={handleSubmit}>
             <Form.Group className="mb-3" controlId="formBasicTitle">
-              <Form.Label>Title</Form.Label>
+              <Form.Label>
+                Title <RequiredMark />
+              </Form.Label>
               <Form.Control
                 type="text"
                 placeholder="Enter title"
                 name="name"
+                required
                 onChange={(e) =>
                   setFormData({ ...formData, name: e.target.value })
                 }
               />
             </Form.Group>
             <Form.Group className="mb-3" controlId="formBasicDescription">
-              <Form.Label>Description</Form.Label>
+              <Form.Label>
+                Description <RequiredMark />
+              </Form.Label>
               <Form.Control
                 as="textarea"
                 placeholder="Enter description"
                 rows={5}
                 name="description"
+                required
                 onChange={(e) =>
                   setFormData({ ...formData, description: e.target.value })
                 }
@@ -68,10 +72,13 @@ export default function ProjectNew() {
               />
             </Form.Group>
             <Form.Group className="mb-3" controlId="formBasicStatus">
-              <Form.Label>Status</Form.Label>
+              <Form.Label>
+                Status <RequiredMark />
+              </Form.Label>
               <Form.Control
                 as="select"
                 name="status"
+                required
                 defaultValue={formData.status}
                 onChange={(e) =>
                   setFormData({ ...formData, status: e.target.value })
@@ -103,3 +110,5 @@ export default function ProjectNew() {
     </div>
   );
 }
+
+export const RequiredMark = () => <span className="text-danger"> *</span>;

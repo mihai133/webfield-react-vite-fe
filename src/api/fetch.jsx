@@ -67,16 +67,12 @@ export const fetchData = async (
     options.headers["Content-Type"] = "application/json";
   }
 
-  console.log(options);
-
   try {
     await fetch(baseUrl, options).then(async (response) => {
-      console.log("Response before JSON", response);
       if (!response.ok) {
         throw new Error(`Error: ${response.statusText}`);
       }
       await response.json().then((r) => {
-        console.log("Response JSON", r);
         data = r;
       });
     });
