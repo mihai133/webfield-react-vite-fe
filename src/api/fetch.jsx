@@ -1,7 +1,6 @@
-import { useState } from "react";
-import { getSession, isLoggedIn } from "./session";
+import { getSession, isLoggedIn, removeSession } from "./session";
 import { useMutation, useQuery } from "@tanstack/react-query";
-import { useNavigate } from "react-router-dom";
+import { redirect } from "react-router-dom";
 
 export const useFQuery = (endpoint, key = [], options = {}) => {
   const {
@@ -69,6 +68,12 @@ export const fetchData = async (
 
   try {
     await fetch(baseUrl, options).then(async (response) => {
+      if (response.statusText === "Unauthorized") {
+        removeSession();
+        redirect("/login");
+        return;
+      }
+
       if (!response.ok) {
         throw new Error(`Error: ${response.statusText}`);
       }

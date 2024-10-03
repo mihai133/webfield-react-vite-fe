@@ -17,13 +17,12 @@ export default function Login(props) {
     setformdata({ ...formdata, [e.target.name]: e.target.value });
   };
 
-  const handleSubmit = async () => {
+  const handleSubmit = async (e) => {
+    e.preventDefault();
     login({ email: formdata.email, password: formdata.password }).then(
       (result) => {
-        console.log(result);
         if (result) {
           let login_user = result?.data?.status?.data?.user;
-          console.log(login_user);
           setSession({
             token: result?.data?.status.token,
           });
@@ -67,48 +66,52 @@ export default function Login(props) {
                       </div>
 
                       {/* <form onSubmit={(e) => handleSubmit(e)}> */}
-                      <div className="form-outline mb-4">
-                        <label className="form-label" htmlFor="formEmail">
-                          Email
-                        </label>
-                        <input
-                          type="email"
-                          name="email"
-                          id="formEmail"
-                          className="form-control"
-                          value={formdata.email}
-                          onChange={(e) => handleChange(e)}
-                          placeholder="Enter your email address"
-                        />
-                      </div>
+                      <form onSubmit={handleSubmit}>
+                        <div className="form-outline mb-4">
+                          <label className="form-label" htmlFor="formEmail">
+                            Email
+                          </label>
+                          <input
+                            type="email"
+                            name="email"
+                            id="formEmail"
+                            className="form-control"
+                            required
+                            value={formdata.email}
+                            onChange={(e) => handleChange(e)}
+                            placeholder="Enter your email address"
+                          />
+                        </div>
 
-                      <div className="form-outline mb-4">
-                        <label className="form-label" htmlFor="formPassword">
-                          Password
-                        </label>
-                        <input
-                          type="password"
-                          id="formPassword"
-                          name="password"
-                          value={formdata.password}
-                          onChange={(e) => handleChange(e)}
-                          className="form-control"
-                        />
-                      </div>
-                      <a className="text-muted" href="/forgot-password">
-                        Forgot password?
-                      </a>
+                        <div className="form-outline mb-4">
+                          <label className="form-label" htmlFor="formPassword">
+                            Password
+                          </label>
+                          <input
+                            type="password"
+                            id="formPassword"
+                            name="password"
+                            required
+                            value={formdata.password}
+                            onChange={(e) => handleChange(e)}
+                            className="form-control"
+                          />
+                        </div>
+                        <a className="text-muted" href="/forgot-password">
+                          Forgot password?
+                        </a>
 
-                      <div className="text-center pt-1 mb-5 pb-1">
-                        <button
-                          data-mdb-button-init
-                          data-mdb-ripple-init
-                          className="btn btn-primary btn-block fa-lg gradient-custom-2 mb-3"
-                          onClick={() => handleSubmit(formdata)}
-                        >
-                          Log in
-                        </button>
-                      </div>
+                        <div className="text-center pt-1 mb-5 pb-1">
+                          <button
+                            data-mdb-button-init
+                            data-mdb-ripple-init
+                            className="btn btn-primary btn-block fa-lg gradient-custom-2 mb-3"
+                            type="submit"
+                          >
+                            Log in
+                          </button>
+                        </div>
+                      </form>
 
                       <div className="d-flex align-items-center justify-content-center pb-4">
                         <p className="mb-0 me-2">Don`t have an account?</p>
